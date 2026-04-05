@@ -1,0 +1,4 @@
+name: Caffeine
+files:
+  - Library/Preferences/com.lightheadsw.Caffeine.plist
+  - Library/Preferences/com.intelliscapesolutions.caffeine.plist

@@ -1,0 +1,4 @@
+name: poetry
+files:
+  - Library/Application Support/pypoetry/config.toml
+  - Library/Preferences/pypoetry/config.toml

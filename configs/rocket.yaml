@@ -1,0 +1,4 @@
+name: Rocket
+files:
+  - Library/Preferences/net.matthewpalmer.Rocket.plist
+  - Library/Application Support/Rocket

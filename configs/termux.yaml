@@ -1,0 +1,5 @@
+name: Configuration for Termux
+files:
+  - .termux/colors.properties
+  - .termux/termux.properties
+  - .termux/font.ttf

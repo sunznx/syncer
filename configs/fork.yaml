@@ -1,0 +1,4 @@
+name: Fork
+files:
+  - Library/Application Support/com.DanPristupov.Fork/custom-commands.json
+  - Library/Preferences/com.DanPristupov.Fork.plist

@@ -1,0 +1,4 @@
+name: xbar
+files:
+  - Library/Application Support/xbar/xbar.config.json
+  - Library/Application Support/xbar/plugins

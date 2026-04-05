@@ -1,0 +1,6 @@
+name: Adobe Lightroom
+files:
+  - Library/Application Support/Adobe/Lightroom
+  - Library/Preferences/com.adobe.Lightroom4.plist
+  - Library/Preferences/com.adobe.Lightroom5.plist
+  - Library/Preferences/com.adobe.Lightroom6.plist

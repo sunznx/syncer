@@ -1,0 +1,9 @@
+name: asdf
+files:
+  - .asdfrc
+  - .default-gems
+  - .default-npm-packages
+  - .default-python-packages
+  - .default-golang-pkgs
+  - .default-mix-commands
+  - .tool-versions

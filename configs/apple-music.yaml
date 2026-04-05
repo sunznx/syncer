@@ -1,0 +1,5 @@
+name: Apple Music
+files:
+  - Library/Music/Scripts
+  - Library/Preferences/com.apple.Music.eq.plist
+  - Library/Preferences/com.apple.Music.plist

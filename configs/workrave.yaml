@@ -1,0 +1,4 @@
+name: Workrave
+files:
+  - .workrave/id
+  - .workrave/historystats

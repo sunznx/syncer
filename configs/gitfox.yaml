@@ -1,0 +1,5 @@
+name: GitFox
+files:
+  - Library/Preferences/com.bytieful.Gitfox.plist
+  - Library/Preferences/com.bytieful.Gitfox-retail.plist
+  - Library/Preferences/com.bytieful.Gitfox-setapp.plist

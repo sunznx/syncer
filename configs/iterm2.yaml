@@ -1,0 +1,5 @@
+name: iTerm2
+files:
+  - Library/Preferences/com.googlecode.iterm2.plist
+  - .iterm2
+  - .iterm2_shell_integration.zsh

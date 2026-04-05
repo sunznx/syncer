@@ -1,0 +1,5 @@
+name: Kiro
+files:
+  - Library/Application Support/Kiro/User/snippets
+  - Library/Application Support/Kiro/User/keybindings.json
+  - Library/Application Support/Kiro/User/settings.json

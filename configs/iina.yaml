@@ -1,0 +1,4 @@
+name: IINA
+files:
+  - Library/Application Support/com.colliderli.iina/input_conf
+  - Library/Preferences/com.colliderli.iina.plist

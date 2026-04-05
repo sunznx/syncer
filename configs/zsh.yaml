@@ -1,0 +1,10 @@
+name: Zsh
+files:
+  - .zshenv
+  - .zprofile
+  - .zshrc
+  - .zlogin
+  - .zlogout
+  - .zcompdump
+  - .zsh_history
+  - .hushlogin

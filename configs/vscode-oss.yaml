@@ -1,0 +1,5 @@
+name: Visual Studio Code Open Source Edition
+files:
+  - Library/Application Support/Code - OSS/User/snippets
+  - Library/Application Support/Code - OSS/User/keybindings.json
+  - Library/Application Support/Code - OSS/User/settings.json

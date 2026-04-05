@@ -1,0 +1,6 @@
+name: X11
+files:
+  - .Xmodmap
+  - .Xresources
+  - .fonts
+  - .xinitrc

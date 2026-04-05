@@ -1,0 +1,8 @@
+name: Opera
+files:
+  - Library/Application Support/com.operasoftware.Opera
+  - Library/Application Support/com.operasoftware.OperaDeveloper
+  - Library/Application Support/com.operasoftware.OperaNext
+  - Library/Preferences/com.operasoftware.Opera.plist
+  - Library/Preferences/com.operasoftware.OperaDeveloper.plist
+  - Library/Preferences/com.operasoftware.OperaNext.plist

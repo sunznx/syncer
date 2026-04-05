@@ -1,0 +1,5 @@
+name: KeePassX
+files:
+  - .keepassx
+  - Library/Preferences/org.keepassx.keepassx.plist
+  - Library/Application Support/keepassx/keepassx2.ini

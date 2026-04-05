@@ -1,0 +1,10 @@
+name: RustRover
+files:
+  - Library/Application Support/JetBrains/RustRover2025.2/codestyles
+  - Library/Application Support/JetBrains/RustRover2025.2/keymaps
+  - Library/Application Support/JetBrains/RustRover2025.2/tools
+  - Library/Application Support/JetBrains/RustRover2025.2/options
+  - Library/Application Support/JetBrains/RustRover2025.3/codestyles
+  - Library/Application Support/JetBrains/RustRover2025.3/keymaps
+  - Library/Application Support/JetBrains/RustRover2025.3/tools
+  - Library/Application Support/JetBrains/RustRover2025.3/options

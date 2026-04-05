@@ -1,0 +1,4 @@
+name: opencode
+files:
+  - .config/opencode
+  - .local/share/opencode

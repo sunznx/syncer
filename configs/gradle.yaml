@@ -1,0 +1,5 @@
+name: Gradle
+files:
+  - .gradle/gradle.properties
+  - .gradle/init.gradle
+  - .gradle/init.d

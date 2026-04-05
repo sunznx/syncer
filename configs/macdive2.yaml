@@ -1,0 +1,4 @@
+name: MacDive
+files:
+  - Library/Application Support/MacDive
+  - Library/Preferences/com.mintsoftware.MacDive2.plist

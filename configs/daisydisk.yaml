@@ -1,0 +1,4 @@
+name: DaisyDisk
+files:
+  - Library/Application Support/DaisyDisk/License.DaisyDisk
+  - Library/Preferences/com.daisydiskapp.DaisyDiskStandAlone.plist

@@ -1,0 +1,4 @@
+name: SpamSieve
+files:
+  - Library/Application Support/SpamSieve
+  - Library/Preferences/com.c-command.SpamSieve.plist

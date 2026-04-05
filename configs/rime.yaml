@@ -1,0 +1,9 @@
+name: Rime
+files:
+  - Library/Rime/default.custom.yaml
+  - Library/Rime/default.yaml
+  - Library/Rime/installation.yaml
+  - Library/Rime/squirrel.custom.yaml
+  - Library/Rime/squirrel.yaml
+  - Library/Rime/symbols.yaml
+  - Library/Rime/user.yaml

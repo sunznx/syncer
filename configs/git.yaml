@@ -1,0 +1,5 @@
+name: Git
+files:
+  - .gitconfig
+  - .gitignore_global
+  - .gitattributes

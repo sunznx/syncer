@@ -1,0 +1,3 @@
+name: Telegram for macOS
+files:
+  - Library/Preferences/ru.keepcoder.Telegram.plist

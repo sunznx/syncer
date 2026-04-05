@@ -1,0 +1,4 @@
+name: SecureCRT
+files:
+  - Library/Application Support/VanDyke/SecureCRT/Config
+  - Library/Preferences/com.vandyke.SecureCRT.plist

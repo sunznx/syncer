@@ -1,0 +1,4 @@
+name: Airflow
+files:
+  - Library/Preferences/com.bitcavehq.Airflow.plist
+  - Library/Application Support/Airflow

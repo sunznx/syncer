@@ -1,0 +1,8 @@
+name: DataGrip
+files:
+  - Library/Application Support/JetBrains/DataGrip2025.3/codestyles
+  - Library/Application Support/JetBrains/DataGrip2025.3/keymaps
+  - Library/Application Support/JetBrains/DataGrip2025.3/tools
+  - Library/Application Support/JetBrains/DataGrip2025.3/options
+  - Library/Application Support/JetBrains/DataGrip2025.3/colors
+  - Library/Application Support/JetBrains/DataGrip2025.3/datagrip.vmoptions

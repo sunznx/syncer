@@ -1,0 +1,4 @@
+name: Name Mangler
+files:
+  - Library/Application Support/Name Mangler
+  - Library/Preferences/com.manytricks.NameMangler.plist

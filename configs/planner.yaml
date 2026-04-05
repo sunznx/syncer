@@ -1,0 +1,4 @@
+name: Planner
+files:
+  - .var/app/com.github.alainm23.planner/config
+  - .var/app/com.github.alainm23.planner/data

@@ -1,0 +1,4 @@
+name: KeePassXC
+files:
+  - Library/Preferences/org.keepassxc.keepassxc.plist
+  - Library/Application Support/keepassxc/keepassxc.ini

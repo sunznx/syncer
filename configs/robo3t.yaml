@@ -1,0 +1,4 @@
+name: Robo 3T
+files:
+  - Library/Preferences/com.3t.Robomongo.plist
+  - .3T

@@ -1,0 +1,6 @@
+name: WebStorm
+files:
+  - Library/Application Support/JetBrains/WebStorm2025.3/codestyles
+  - Library/Application Support/JetBrains/WebStorm2025.3/keymaps
+  - Library/Application Support/JetBrains/WebStorm2025.3/tools
+  - Library/Application Support/JetBrains/WebStorm2025.3/options

@@ -1,0 +1,5 @@
+name: VSCodium
+files:
+  - Library/Application Support/VSCodium/User/snippets
+  - Library/Application Support/VSCodium/User/keybindings.json
+  - Library/Application Support/VSCodium/User/settings.json

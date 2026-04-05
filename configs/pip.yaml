@@ -1,0 +1,4 @@
+name: pip
+files:
+  - Library/Application Support/pip/pip.conf
+  - .pip/pip.conf

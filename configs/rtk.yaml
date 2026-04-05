@@ -1,0 +1,5 @@
+name: rtk
+files:
+  - .config/rtk
+  - .local/share/rtk/
+  - Library/Application Support/rtk

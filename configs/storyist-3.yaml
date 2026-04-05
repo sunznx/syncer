@@ -1,0 +1,4 @@
+name: storyist-3
+files:
+  - Library/Preferences/.com.storyist.storyist.plist
+  - Library/Preferences/com.storyist.storyist.plist

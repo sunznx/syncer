@@ -1,0 +1,6 @@
+name: MySQL Workbench
+files:
+  - Library/Application Support/MySQL/Workbench/connections.xml
+  - Library/Application Support/MySQL/Workbench/server_instances.xml
+  - Library/Application Support/MySQL/Workbench/wb_options.xml
+  - Library/Preferences/com.oracle.mysql.workbench.plist

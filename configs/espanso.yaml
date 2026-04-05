@@ -1,0 +1,4 @@
+name: espanso
+files:
+  - Library/Preferences/espanso
+  - Library/Application Support/espanso

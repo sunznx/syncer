@@ -1,0 +1,5 @@
+name: HyperDock
+files:
+  - Library/Application Support/HyperDock
+  - Library/Preferences/de.bahoom.HyperDock.plist
+  - Library/Preferences/de.bahoom.HyperDock.prefpane.plist

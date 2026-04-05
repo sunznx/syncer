@@ -1,0 +1,5 @@
+name: Royal TSX
+files:
+  - Library/Application Support/Royal TSX/License.xml
+  - Library/Application Support/Royal TSX/UserPreferences.config
+  - Library/Preferences/com.lemonmojo.RoyalTSX.App.plist

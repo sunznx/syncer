@@ -1,0 +1,5 @@
+name: Windsurf
+files:
+  - Library/Application Support/Windsurf/User/snippets
+  - Library/Application Support/Windsurf/User/keybindings.json
+  - Library/Application Support/Windsurf/User/settings.json

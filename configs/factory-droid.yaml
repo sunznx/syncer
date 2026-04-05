@@ -1,0 +1,9 @@
+name: Factory Droid
+files:
+  - .factory/commands
+  - .factory/droids
+  - .factory/AGENTS.md
+  - .factory/config.json
+  - .factory/settings.json
+  - .factory/auth.json
+  - .factory/mcp.json

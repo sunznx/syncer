@@ -1,0 +1,15 @@
+# Binaries
+build/
+
+# Test coverage
+coverage.out
+coverage.html
+coverage-all.out
+scripts/test.sh
+
+# Claude Code 本地配置
+.claude
+CLAUDE.local.md
+
+.DS_Store
+coverage-*

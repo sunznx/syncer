@@ -1,0 +1,227 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: # 允许手动触发
+
+env:
+  GO_VERSION: '1.23'
+  GOLANGCI_LINT_VERSION: 'v1.62.2'
+  GOCACHE_VERSION: v0.6.0
+
+jobs:
+  test:
+    name: Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        go-version: ['1.21', '1.22', '1.23', '1.24']
+        exclude:
+          - os: macos-latest
+            go-version: '1.21'  # macOS 1.21 有已知问题
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: ${{ matrix.go-version }}
+        cache: true
+
+    - name: Display Go version
+      run: go version
+
+    - name: Download dependencies
+      run: go mod download
+
+    - name: Run tests
+      run: go test -v -race -coverprofile=coverage.out ./...
+
+    - name: Generate coverage report
+      run: go tool cover -html=coverage.out -o coverage.html
+
+    - name: Check coverage threshold
+      run: |
+        coverage=$(go tool cover -func=coverage.out | grep "total:" | awk '{print substr($3, 1, length($3)-1)}')
+        echo "Coverage: $coverage%"
+        if (( $(echo "$coverage < 80.0" | bc -l) )); then
+          echo "❌ Coverage below 80%: $coverage%"
+          exit 1
+        fi
+        echo "✅ Coverage meets 80% threshold: $coverage%"
+
+    - name: Upload coverage reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-${{ matrix.os }}-go${{ matrix.go-version }}
+        path: |
+          coverage.out
+          coverage.html
+        if-no-files-found: error
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: ${{ env.GO_VERSION }}
+        cache: true
+
+    - name: Run go vet
+      run: go vet ./...
+
+    - name: Check gofmt
+      run: |
+        fmt_output=$(gofmt -l .)
+        if [ -n "$fmt_output" ]; then
+          echo "❌ The following files are not properly formatted:"
+          echo "$fmt_output"
+          exit 1
+        fi
+        echo "✅ All files are properly formatted"
+
+    - name: Run goimports check
+      run: |
+        if ! command -v goimports &> /dev/null; then
+          echo "Installing goimports..."
+          go install golang.org/x/tools/cmd/goimports@latest
+        fi
+        import_output=$(goimports -l .)
+        if [ -n "$import_output" ]; then
+          echo "❌ The following files have import issues:"
+          echo "$import_output"
+          exit 1
+        fi
+        echo "✅ All imports are properly formatted"
+
+    - name: Run golangci-lint
+      uses: golangci/golangci-lint-action@v6
+      with:
+        version: ${{ env.GOLANGCI_LINT_VERSION }}
+        args: run --config
+
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    needs: test
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        go-version: ['1.23', '1.24']
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: ${{ matrix.go-version }}
+        cache: true
+
+    - name: Build binary
+      run: |
+        VERSION=$(git describe --tags --always --dirty 2>/dev/null || echo "dev")
+        go build -ldflags="-s -w -X main.version=$VERSION" -o syncer ./main.go
+        ls -lh syncer
+
+    - name: Test binary help
+      run: ./syncer --help
+
+    - name: Test binary list
+      run: ./syncer list
+
+    - name: Upload binaries
+      uses: actions/upload-artifact@v4
+      with:
+        name: syncer-${{ matrix.os }}-go${{ matrix.go-version }}
+        path: syncer
+        if-no-files-found: error
+
+  security:
+    name: Security
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: ${{ env.GO_VERSION }}
+        cache: true
+
+    - name: Install gosec
+      run: go install github.com/securecodewarrior/gosec/v2/cmd/gosec@latest
+
+    - name: Run gosec
+      run: |
+        gosec -fmt json -out gosec-report.json ./... || true
+
+    - name: Display gosec results
+      run: |
+        if [ -f gosec-report.json ]; then
+          issues=$(jq '.Issues | length' gosec-report.json)
+          if [ "$issues" -gt 0 ]; then
+            echo "⚠️  Found $issues security issues:"
+            jq -r '.Issues[] | "\(.Severity): \(.File):\(.Line) - \(.Message)"' gosec-report.json
+            # Don't fail the build, just warn
+          else
+            echo "✅ No security issues found"
+          fi
+        fi
+
+    - name: Upload security report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: gosec-report
+        path: gosec-report.json
+
+  # 可选：添加 CodeQL 静态分析（需要 GitHub Advanced Security）
+  # codeql:
+  #   name: CodeQL
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       language: [go]
+  #       queries: default.yml
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+
+  #     - name: Initialize CodeQL
+  #       uses: github/codeql/analyze-go-autobuild@v2
+  #       with:
+  #         languages: ${{ matrix.language }}
+
+  #     - name: Perform analysis
+  #       uses: github/codeql/analyze-go-autobuild@v2
+  #       with:
+  #         queries: ${{ matrix.queries }}
+  #       with:
+  #         upload-result: true
+  #         wait-timeout: 30 minutes
+
+  #     - name: Upload CodeQL results
+  #       if: always()
+  #       uses: github/codeql/upload-sarif@v2
+  #       with:
+  #         sarif-latest-tar: false

@@ -1,0 +1,4 @@
+name: Nushell
+files:
+  - Library/Application Support/nushell/env.nu
+  - Library/Application Support/nushell/config.nu

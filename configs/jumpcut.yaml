@@ -1,0 +1,4 @@
+name: Jumpcut
+files:
+  - Library/Application Support/Jumpcut
+  - Library/Preferences/net.sf.Jumpcut.plist

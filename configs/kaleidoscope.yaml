@@ -1,0 +1,4 @@
+name: Kaleidoscope
+files:
+  - Library/Preferences/com.blackpixel.kaleidoscope.plist
+  - Library/Application Support/Kaleidoscope

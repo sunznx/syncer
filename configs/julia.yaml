@@ -1,0 +1,4 @@
+name: Julia
+files:
+  - .juliarc.jl
+  - .julia/config/startup.jl

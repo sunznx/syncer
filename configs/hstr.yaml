@@ -1,0 +1,4 @@
+name: hstr
+files:
+  - .hstr_favorites
+  - .hstr_blacklist

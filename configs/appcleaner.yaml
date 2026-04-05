@@ -1,0 +1,4 @@
+name: AppCleaner
+files:
+  - Library/Preferences/net.freemacsoft.AppCleaner.plist
+  - Library/Preferences/net.freemacsoft.AppCleaner-SmartDelete.plist

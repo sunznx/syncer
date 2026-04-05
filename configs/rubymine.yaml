@@ -1,0 +1,10 @@
+name: RubyMine
+files:
+  - Library/Application Support/JetBrains/RubyMine2023.1/codestyles
+  - Library/Application Support/JetBrains/RubyMine2023.1/keymaps
+  - Library/Application Support/JetBrains/RubyMine2023.1/tools
+  - Library/Application Support/JetBrains/RubyMine2023.1/options
+  - Library/Application Support/JetBrains/RubyMine2023.2/codestyles
+  - Library/Application Support/JetBrains/RubyMine2023.2/keymaps
+  - Library/Application Support/JetBrains/RubyMine2023.2/tools
+  - Library/Application Support/JetBrains/RubyMine2023.2/options

@@ -1,0 +1,9 @@
+name: R
+files:
+  - .R
+  - .Rhistory
+  - .Rprofile
+  - .Rprofile.d
+  - .Renviron
+  - .Renviron.d
+  - Library/Preferences/org.R-project.R.plist

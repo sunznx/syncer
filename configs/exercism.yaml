@@ -1,0 +1,4 @@
+name: Exercism
+files:
+  - .exercism
+  - .exercism.json

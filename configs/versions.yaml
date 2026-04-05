@@ -1,0 +1,4 @@
+name: Versions
+files:
+  - Library/Application Support/Versions/License
+  - Library/Preferences/com.blackpixel.versions.plist

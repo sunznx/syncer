@@ -1,0 +1,7 @@
+name: Popcorn-Time
+files:
+  - Library/Application Support/Popcorn-Time/data/bookmarks.db
+  - Library/Application Support/Popcorn-Time/data/settings.db
+  - Library/Application Support/Popcorn-Time/data/watched.db
+  - Library/Application Support/Popcorn-Time/data/movies.db
+  - Library/Application Support/Popcorn-Time/data/shows.db

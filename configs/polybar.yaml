@@ -1,0 +1,4 @@
+name: polybar
+files:
+  - .polybar/config
+  - .polybar/launch.sh

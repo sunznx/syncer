@@ -1,0 +1,4 @@
+name: Cerebro
+files:
+  - Library/Application Support/Cerebro/config.json
+  - Library/Application Support/Cerebro/plugins

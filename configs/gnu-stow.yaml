@@ -1,0 +1,4 @@
+name: GNU Stow
+files:
+  - .stowrc
+  - .stow-global-ignore

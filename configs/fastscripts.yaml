@@ -1,0 +1,4 @@
+name: FastScripts
+files:
+  - Library/Preferences/com.red-sweater.fastscripts.plist
+  - Library/Application Support/FastScripts

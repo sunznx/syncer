@@ -1,0 +1,3 @@
+name: Netlify
+files:
+  - .netlify/config.json

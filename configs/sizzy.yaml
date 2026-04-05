@@ -1,0 +1,4 @@
+name: Sizzy
+files:
+  - Library/Application Support/Sizzy/config.json
+  - Library/Application Support/Sizzy/window-state.json

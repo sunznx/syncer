@@ -1,0 +1,3 @@
+name: Qutebrowser
+files:
+  - .qutebrowser/config.py

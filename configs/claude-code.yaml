@@ -1,0 +1,4 @@
+name: claude-code
+files:
+  - .claude
+  - .claude.json

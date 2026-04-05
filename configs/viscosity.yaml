@@ -1,0 +1,4 @@
+name: Viscosity
+files:
+  - Library/Application Support/Viscosity/OpenVPN
+  - Library/Preferences/com.viscosityvpn.Viscosity.plist

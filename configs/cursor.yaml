@@ -1,0 +1,5 @@
+name: Cursor
+files:
+  - Library/Application Support/Cursor/User/snippets
+  - Library/Application Support/Cursor/User/keybindings.json
+  - Library/Application Support/Cursor/User/settings.json

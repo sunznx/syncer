@@ -1,0 +1,4 @@
+name: Alacritty
+files:
+  - .alacritty.yml
+  - .alacritty.toml

@@ -1,0 +1,3 @@
+name: WezTerm
+files:
+  - .wezterm.lua

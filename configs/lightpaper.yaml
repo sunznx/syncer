@@ -1,0 +1,5 @@
+name: LightPaper
+files:
+  - .lightpaper
+  - Library/Application Support/LightPaper/customCSS.css
+  - Library/Preferences/com.42squares.LightPaper.plist

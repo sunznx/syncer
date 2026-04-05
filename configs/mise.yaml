@@ -1,0 +1,6 @@
+name: mise-en-place
+files:
+  - mise.toml
+  - mise/config.toml
+  - .mise.toml
+  - .mise/config.toml

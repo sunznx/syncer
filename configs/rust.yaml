@@ -1,0 +1,4 @@
+name: Rust
+files:
+  - .cargo/config.toml
+  - .cargo/config

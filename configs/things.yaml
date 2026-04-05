@@ -1,0 +1,4 @@
+name: Things
+files:
+  - Library/Preferences/com.culturedcode.things.plist
+  - Library/Application Support/Cultured Code/Licenses.plist

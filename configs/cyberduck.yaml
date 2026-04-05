@@ -1,0 +1,6 @@
+name: Cyberduck
+files:
+  - Library/Application Support/Cyberduck
+  - Library/Containers/ch.sudo.cyberduck/Data/Library/Application Support/Cyberduck
+  - Library/Group Containers/G69SCX94XU.duck/Library/Application Support/duck
+  - Library/Preferences/ch.sudo.cyberduck.plist

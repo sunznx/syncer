@@ -1,0 +1,4 @@
+name: Ctags
+files:
+  - .ctags
+  - .ctags.d

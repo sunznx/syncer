@@ -1,0 +1,6 @@
+name: Proxyman
+files:
+  - Library/Application Support/com.proxyman.NSProxy
+  - Library/Preferences/com.proxyman.NSProxy.plist
+  - Library/Application Support/com.proxyman.NSProxy-setapp
+  - Library/Preferences/com.proxyman.NSProxy-setapp.plist

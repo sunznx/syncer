@@ -1,0 +1,5 @@
+name: gmailctl
+files:
+  - .gmailctl/config.jsonnet
+  - .gmailctl/credentials.json
+  - .gmailctl/gmailctl.libsonnet

@@ -1,0 +1,11 @@
+name: rtx
+files:
+  - .rtx.toml
+  - .tool-versions
+  - .default-go-packages
+  - .default-gems
+  - .default-nodejs-packages
+  - .default-node-packages
+  - .default-npm-packages
+  - .default-python-packages
+  - .default-mix-commands

@@ -1,0 +1,5 @@
+name: composer
+files:
+  - .composer/auth.json
+  - .composer/config.json
+  - .composer/composer.json

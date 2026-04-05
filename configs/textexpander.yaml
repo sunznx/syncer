@@ -1,0 +1,4 @@
+name: TextExpander
+files:
+  - Library/Application Support/TextExpander/Settings.textexpander
+  - Library/Preferences/com.smileonmymac.textexpander.plist

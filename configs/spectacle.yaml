@@ -1,0 +1,4 @@
+name: Spectacle
+files:
+  - Library/Preferences/com.divisiblebyzero.Spectacle.plist
+  - Library/Application Support/Spectacle

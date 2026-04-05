@@ -1,0 +1,5 @@
+name: Yummy FTP
+files:
+  - Library/Preferences/com.yummysoftware.yummy-ftp.plist
+  - Library/Application Support/Yummy FTP/DefaultBookmark.bkmk
+  - Library/Application Support/Yummy FTP/Bookmarks

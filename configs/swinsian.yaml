@@ -1,0 +1,6 @@
+name: Swinsian
+files:
+  - Library/Application Support/Swinsian/Library.sqlite
+  - Library/Application Support/Swinsian/License.swinsianlicense
+  - Library/Preferences/com.swinsian.Swinsian.plist
+  - Library/Preferences/com.swinsian.SwinsianDesktopWindow.plist

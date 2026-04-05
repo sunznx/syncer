@@ -1,0 +1,5 @@
+name: oh-my-zsh
+external:
+  - type: git
+    url: https://github.com/ohmyzsh/ohmyzsh.git
+    target: .oh-my-zsh

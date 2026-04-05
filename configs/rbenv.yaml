@@ -1,0 +1,3 @@
+name: rbenv
+files:
+  - .rbenv/default_gems
