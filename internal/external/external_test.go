@@ -53,9 +53,15 @@ func TestHasUncommittedChanges(t *testing.T) {
 			repoDir := t.TempDir()
 
 			// Initialize git repo
-			exec.Command("git", "-C", repoDir, "init").Run()
-			exec.Command("git", "-C", repoDir, "config", "user.name", "Test").Run()
-			exec.Command("git", "-C", repoDir, "config", "user.email", "test@example.com").Run()
+			if err := exec.Command("git", "-C", repoDir, "init").Run(); err != nil {
+				t.Fatalf("git init failed: %v", err)
+			}
+			if err := exec.Command("git", "-C", repoDir, "config", "user.name", "Test").Run(); err != nil {
+				t.Fatalf("git config user.name failed: %v", err)
+			}
+			if err := exec.Command("git", "-C", repoDir, "config", "user.email", "test@example.com").Run(); err != nil {
+				t.Fatalf("git config user.email failed: %v", err)
+			}
 
 			// Create initial commit
 			initialFile := filepath.Join(repoDir, "initial.txt")
@@ -303,7 +309,7 @@ func TestPullFileWithTarget(t *testing.T) {
 	content := []byte("hello from server")
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write(content)
+		_, _ = w.Write(content)
 	}))
 	defer ts.Close()
 
@@ -347,7 +353,7 @@ func TestPullFileExecutable(t *testing.T) {
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("#!/bin/sh\necho hello"))
+		_, _ = w.Write([]byte("#!/bin/sh\necho hello"))
 	}))
 	defer ts.Close()
 
@@ -474,7 +480,7 @@ func TestPullArchiveUnsupportedFormat(t *testing.T) {
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("not an archive"))
+		_, _ = w.Write([]byte("not an archive"))
 	}))
 	defer ts.Close()
 

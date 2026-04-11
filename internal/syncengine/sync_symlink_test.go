@@ -3,6 +3,7 @@ package syncengine
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -47,7 +48,7 @@ func TestSymlinkAbsolutePath(t *testing.T) {
 	// If it's a relative path without ../ prefix, it's broken
 	if filepath.IsAbs(target) {
 		t.Logf("✓ Target is absolute path: %s", target)
-	} else if filepath.HasPrefix(target, "../") {
+	} else if strings.HasPrefix(target, "../") {
 		t.Logf("✓ Target is valid relative path: %s", target)
 	} else {
 		t.Errorf("✗ Target is broken relative path: %s (must be absolute or start with ../)", target)

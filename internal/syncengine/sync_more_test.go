@@ -26,8 +26,12 @@ func TestEngineSyncWildcard(t *testing.T) {
 	engine := New(homeDir, syncDir, WithCommand("backup"))
 
 	// Create multiple files matching wildcard
-	os.WriteFile(filepath.Join(homeDir, "file1.txt"), []byte("1"), 0644)
-	os.WriteFile(filepath.Join(homeDir, "file2.txt"), []byte("2"), 0644)
+	if err := os.WriteFile(filepath.Join(homeDir, "file1.txt"), []byte("1"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(homeDir, "file2.txt"), []byte("2"), 0644); err != nil {
+		t.Fatal(err)
+	}
 
 	app := &appdb.AppConfig{
 		Name:   "test",
@@ -89,7 +93,9 @@ func TestSyncFileBackupBrokenSymlink(t *testing.T) {
 
 	// Create a broken symlink in home
 	linkPath := filepath.Join(homeDir, "broken")
-	os.Symlink("/nonexistent/path", linkPath)
+	if err := os.Symlink("/nonexistent/path", linkPath); err != nil {
+		t.Fatal(err)
+	}
 
 	app := &appdb.AppConfig{Name: "test", Files: []string{"broken"}}
 	_, err := engine.Sync(app)
@@ -105,7 +111,9 @@ func TestSyncFileBackupResync(t *testing.T) {
 	engine := New(homeDir, syncDir, WithCommand("backup"))
 
 	// Both home and sync exist
-	os.WriteFile(filepath.Join(homeDir, "file.txt"), []byte("home"), 0644)
+	if err := os.WriteFile(filepath.Join(homeDir, "file.txt"), []byte("home"), 0644); err != nil {
+		t.Fatal(err)
+	}
 	os.WriteFile(filepath.Join(syncDir, "file.txt"), []byte("sync"), 0644)
 
 	app := &appdb.AppConfig{Name: "test", Files: []string{"file.txt"}, Mode: "copy"}
@@ -124,8 +132,12 @@ func TestSyncFileRestoreAlreadyCorrect(t *testing.T) {
 	engine := New(homeDir, syncDir, WithCommand("restore"))
 
 	// Create sync file and correct symlink at home
-	os.WriteFile(filepath.Join(syncDir, "file.txt"), []byte("sync"), 0644)
-	os.Symlink(filepath.Join(syncDir, "file.txt"), filepath.Join(homeDir, "file.txt"))
+	if err := os.WriteFile(filepath.Join(syncDir, "file.txt"), []byte("sync"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(filepath.Join(syncDir, "file.txt"), filepath.Join(homeDir, "file.txt")); err != nil {
+		t.Fatal(err)
+	}
 
 	app := &appdb.AppConfig{Name: "test", Files: []string{"file.txt"}}
 	result, err := engine.Sync(app)
@@ -143,9 +155,13 @@ func TestMigrateExternalSyncPathInside(t *testing.T) {
 
 	// Create a symlink inside syncDir
 	inner := filepath.Join(syncDir, "inner.txt")
-	os.WriteFile(inner, []byte("x"), 0644)
+	if err := os.WriteFile(inner, []byte("x"), 0644); err != nil {
+		t.Fatal(err)
+	}
 	link := filepath.Join(syncDir, "link.txt")
-	os.Symlink(inner, link)
+	if err := os.Symlink(inner, link); err != nil {
+		t.Fatal(err)
+	}
 
 	migrated, err := engine.migrateExternalSyncPath(link)
 	if err != nil {

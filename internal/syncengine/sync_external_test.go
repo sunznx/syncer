@@ -43,14 +43,6 @@ func TestSync_ExternalResource_TwoLayerSymlinks(t *testing.T) {
 
 	// Manually call the external sync logic (copied from Sync method)
 	extCfg := app.External[0]
-	homeTargetPath := extCfg.Target
-	if homeTargetPath == "" {
-		homeTargetPath = "./" + app.Name
-	}
-	homeTargetPath = strings.TrimPrefix(homeTargetPath, "./")
-	if homeTargetPath == "" {
-		homeTargetPath = app.Name
-	}
 
 	syncPath := extCfg.Target
 	if syncPath == "" {
@@ -62,7 +54,9 @@ func TestSync_ExternalResource_TwoLayerSymlinks(t *testing.T) {
 	syncDirSymlink := filepath.Join(syncDir, syncPath)
 	externalRepoPath := filepath.Join(extDest, extCfg.Path)
 
-	os.MkdirAll(filepath.Dir(syncDirSymlink), 0755)
+	if err := os.MkdirAll(filepath.Dir(syncDirSymlink), 0755); err != nil {
+		t.Fatalf("Failed to create dir: %v", err)
+	}
 	os.RemoveAll(syncDirSymlink)
 	relSrc, err := filepath.Rel(filepath.Dir(syncDirSymlink), externalRepoPath)
 	if err != nil {
@@ -74,7 +68,9 @@ func TestSync_ExternalResource_TwoLayerSymlinks(t *testing.T) {
 
 	// Layer 2: home -> sync_dir
 	homeSymlink := filepath.Join(home, syncPath)
-	os.MkdirAll(filepath.Dir(homeSymlink), 0755)
+	if err := os.MkdirAll(filepath.Dir(homeSymlink), 0755); err != nil {
+		t.Fatalf("Failed to create dir: %v", err)
+	}
 	os.RemoveAll(homeSymlink)
 	relSrc, err = filepath.Rel(filepath.Dir(homeSymlink), syncDirSymlink)
 	if err != nil {
@@ -153,9 +149,6 @@ func TestSync_ExternalResource_WholeRepo(t *testing.T) {
 		homeTargetPath = "./" + app.Name
 	}
 	homeTargetPath = strings.TrimPrefix(homeTargetPath, "./")
-	if homeTargetPath == "" {
-		homeTargetPath = app.Name
-	}
 
 	// For whole repo, extPath is "."
 	syncPath := homeTargetPath
@@ -164,7 +157,9 @@ func TestSync_ExternalResource_WholeRepo(t *testing.T) {
 	syncDirSymlink := filepath.Join(syncDir, syncPath)
 	externalRepoPath := filepath.Join(extDest, ".")
 
-	os.MkdirAll(filepath.Dir(syncDirSymlink), 0755)
+	if err := os.MkdirAll(filepath.Dir(syncDirSymlink), 0755); err != nil {
+		t.Fatalf("Failed to create dir: %v", err)
+	}
 	os.RemoveAll(syncDirSymlink)
 	relSrc, err := filepath.Rel(filepath.Dir(syncDirSymlink), externalRepoPath)
 	if err != nil {
@@ -176,7 +171,9 @@ func TestSync_ExternalResource_WholeRepo(t *testing.T) {
 
 	// Layer 2: home -> sync_dir
 	homeSymlink := filepath.Join(home, syncPath)
-	os.MkdirAll(filepath.Dir(homeSymlink), 0755)
+	if err := os.MkdirAll(filepath.Dir(homeSymlink), 0755); err != nil {
+		t.Fatalf("Failed to create dir: %v", err)
+	}
 	os.RemoveAll(homeSymlink)
 	relSrc, err = filepath.Rel(filepath.Dir(homeSymlink), syncDirSymlink)
 	if err != nil {

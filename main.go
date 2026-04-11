@@ -385,14 +385,16 @@ func runSync(args []string, command string) error {
 		}
 
 		// Record history
-		histMgr.Record(&history.Entry{
+		if err := histMgr.Record(&history.Entry{
 			Command:   command,
 			Apps:      appNames,
 			FileCount: totalFiles,
 			Success:   success,
 			Error:     errMsg,
 			DryRun:    flagDryRun,
-		})
+		}); err != nil {
+			fmt.Fprintf(os.Stderr, "warning: failed to record history: %v\n", err)
+		}
 
 		return nil
 	}
@@ -446,14 +448,16 @@ func runSync(args []string, command string) error {
 	}
 
 	// Record history
-	histMgr.Record(&history.Entry{
+	if err := histMgr.Record(&history.Entry{
 		Command:   command,
 		Apps:      appNames,
 		FileCount: totalFiles,
 		Success:   success,
 		Error:     errMsg,
 		DryRun:    flagDryRun,
-	})
+	}); err != nil {
+		fmt.Fprintf(os.Stderr, "warning: failed to record history: %v\n", err)
+	}
 
 	return nil
 }

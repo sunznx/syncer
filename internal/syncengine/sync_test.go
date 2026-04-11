@@ -291,7 +291,7 @@ func TestSync_NeitherExist_ReturnsAlreadySynced(t *testing.T) {
 	}
 	// Result is returned but with 0 files (since nothing was processed)
 	if result == nil {
-		t.Error("expected result object, got nil")
+		t.Fatal("expected result object, got nil")
 	}
 	if len(result.Files) != 0 {
 		t.Errorf("expected 0 files processed, got %d", len(result.Files))

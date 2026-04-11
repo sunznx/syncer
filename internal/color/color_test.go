@@ -56,7 +56,7 @@ func TestColorPrint(t *testing.T) {
 	os.Stdout = oldStdout
 
 	var buf strings.Builder
-	fmt.Fscan(r, &buf)
+	_, _ = fmt.Fscan(r, &buf)
 	// We just verify no panic occurs; exact stdout capture in tests is brittle.
 }
 
