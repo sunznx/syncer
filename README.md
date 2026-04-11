@@ -1,5 +1,7 @@
 # syncer
 
+**[中文](README.zh-CN.md)**
+
 > A single-binary Go tool that syncs your app configs across machines via cloud storage.
 
 Inspired by [Mackup](https://github.com/lra/mackup), rewritten in Go with zero Python dependencies.

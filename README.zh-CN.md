@@ -1,5 +1,7 @@
 # syncer
 
+**[English](README.md)**
+
 > 一个通过云存储在多台机器间同步应用程序配置文件的单一二进制 Go 工具。
 
 灵感来自 [Mackup](https://github.com/lra/mackup)，用 Go 重写，零 Python 依赖。
