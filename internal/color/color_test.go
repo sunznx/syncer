@@ -90,6 +90,32 @@ func TestDisable(t *testing.T) {
 	disabled = false
 }
 
+func TestDisabledSprintf(t *testing.T) {
+	disabled = true
+	defer func() { disabled = false }()
+
+	got := Red.Sprintf("value: %d", 42)
+	if got != "value: 42" {
+		t.Errorf("disabled Sprintf() = %q, want %q", got, "value: 42")
+	}
+}
+
+func TestDisabledPrint(t *testing.T) {
+	disabled = true
+	defer func() { disabled = false }()
+
+	// Just verify no panic
+	Red.Print("test")
+}
+
+func TestDisabledPrintf(t *testing.T) {
+	disabled = true
+	defer func() { disabled = false }()
+
+	// Just verify no panic
+	Red.Printf("%s", "test")
+}
+
 func TestSemanticHelpers(t *testing.T) {
 	disabled = false
 
