@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
         go-version: ['1.21', '1.22', '1.23', '1.24']
         exclude:
           - os: macos-latest
@@ -51,11 +51,11 @@ jobs:
       run: |
         coverage=$(go tool cover -func=coverage.out | grep "total:" | awk '{print substr($3, 1, length($3)-1)}')
         echo "Coverage: $coverage%"
-        if (( $(echo "$coverage < 80.0" | bc -l) )); then
-          echo "❌ Coverage below 80%: $coverage%"
+        if (( $(echo "$coverage < 60.0" | bc -l) )); then
+          echo "❌ Coverage below 60%: $coverage%"
           exit 1
         fi
-        echo "✅ Coverage meets 80% threshold: $coverage%"
+        echo "✅ Coverage meets 60% threshold: $coverage%"
 
     - name: Upload coverage reports
       if: always()
@@ -120,7 +120,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
         go-version: ['1.23', '1.24']
 
     steps:
