@@ -1,0 +1,56 @@
+version: 2
+
+builds:
+  - main: ./main.go
+    binary: syncer
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+
+archives:
+  - formats: [tar.gz]
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "arm64" }}arm64
+      {{- else }}{{ .Arch }}{{ end }}
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+
+checksum:
+  name_template: "checksums.txt"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^ci:"
+      - "^chore:"
+      - "merge conflict"
+      - Merge pull request
+      - Co-Authored-By
+
+brews:
+  - name: syncer
+    repository:
+      owner: sunznx
+      name: homebrew-tap
+    directory: Formula
+    homepage: "https://github.com/sunznx/syncer"
+    description: "Sync app configs across machines via cloud storage"
+    license: MIT
+    install: |
+      bin.install "syncer"
+    test: |
+      system "#{bin}/syncer", "version"
