@@ -112,7 +112,6 @@ jobs:
       uses: golangci/golangci-lint-action@v6
       with:
         version: ${{ env.GOLANGCI_LINT_VERSION }}
-        args: run --config
 
   build:
     name: Build
