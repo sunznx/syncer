@@ -10,9 +10,6 @@ import (
 
 func TestConfig_Defaults(t *testing.T) {
 	cfg := Default()
-	if cfg.Settings.StoragePath != "" {
-		t.Errorf("expected empty StoragePath, got %q", cfg.Settings.StoragePath)
-	}
 	if cfg.HomeDir == "" {
 		t.Error("expected non-empty HomeDir")
 	}
@@ -33,7 +30,7 @@ func TestConfig_WithHomeDir(t *testing.T) {
 func TestLoad_EnvVariable(t *testing.T) {
 	dir := t.TempDir()
 	cfgFile := filepath.Join(dir, "syncer.yaml")
-	content := []byte("settings:\n  storage_path: /custom/sync\n")
+	content := []byte("applications:\n  apps:\n    - git\n")
 	if err := os.WriteFile(cfgFile, content, 0644); err != nil {
 		t.Fatal(err)
 	}
@@ -43,15 +40,15 @@ func TestLoad_EnvVariable(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Load failed: %v", err)
 	}
-	if cfg.Settings.StoragePath != "/custom/sync" {
-		t.Errorf("expected /custom/sync, got %q", cfg.Settings.StoragePath)
+	if cfg.ConfigFile != cfgFile {
+		t.Errorf("expected ConfigFile %q, got %q", cfgFile, cfg.ConfigFile)
 	}
 }
 
 func TestLoad_SpecifiedApps(t *testing.T) {
 	dir := t.TempDir()
 	cfgFile := filepath.Join(dir, "syncer.yaml")
-	content := []byte("settings:\n  storage_path: /sync\n\napplications:\n  apps:\n    - git\n    - zsh\n    - vscode\n")
+	content := []byte("applications:\n  apps:\n    - git\n    - zsh\n    - vscode\n")
 	if err := os.WriteFile(cfgFile, content, 0644); err != nil {
 		t.Fatal(err)
 	}
@@ -97,7 +94,7 @@ func TestLoad_FallbackConfigDir(t *testing.T) {
 		t.Fatal(err)
 	}
 	cfgFile := filepath.Join(configDir, "syncer.yaml")
-	content := []byte("settings:\n  storage_path: /fallback/sync\n")
+	content := []byte("applications:\n  apps:\n    - git\n")
 	if err := os.WriteFile(cfgFile, content, 0644); err != nil {
 		t.Fatal(err)
 	}
@@ -108,8 +105,8 @@ func TestLoad_FallbackConfigDir(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Load failed: %v", err)
 	}
-	if cfg.Settings.StoragePath != "/fallback/sync" {
-		t.Errorf("expected /fallback/sync, got %q", cfg.Settings.StoragePath)
+	if cfg.ConfigFile != cfgFile {
+		t.Errorf("expected ConfigFile %q, got %q", cfgFile, cfg.ConfigFile)
 	}
 }
 
@@ -119,9 +116,6 @@ func TestLoad_NoConfig_Defaults(t *testing.T) {
 	cfg, err := Load(WithHomeDir(home))
 	if err != nil {
 		t.Fatalf("Load failed: %v", err)
-	}
-	if cfg.Settings.StoragePath != "" {
-		t.Errorf("expected empty StoragePath, got %q", cfg.Settings.StoragePath)
 	}
 	if cfg.ConfigFile != "" {
 		t.Errorf("expected empty ConfigFile, got %q", cfg.ConfigFile)
@@ -135,7 +129,7 @@ func TestLoad_CloudStoragePath(t *testing.T) {
 		t.Fatal(err)
 	}
 	cfgFile := filepath.Join(dropboxDir, "syncer.yaml")
-	content := []byte("settings:\n  storage_path: /dropbox/sync\n")
+	content := []byte("applications:\n  apps:\n    - git\n")
 	if err := os.WriteFile(cfgFile, content, 0644); err != nil {
 		t.Fatal(err)
 	}
@@ -145,8 +139,8 @@ func TestLoad_CloudStoragePath(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Load failed: %v", err)
 	}
-	if cfg.Settings.StoragePath != "/dropbox/sync" {
-		t.Errorf("expected /dropbox/sync, got %q", cfg.Settings.StoragePath)
+	if cfg.ConfigFile != cfgFile {
+		t.Errorf("expected ConfigFile %q, got %q", cfgFile, cfg.ConfigFile)
 	}
 }
 
@@ -171,7 +165,7 @@ func TestLoad_EmptyAppsList(t *testing.T) {
 func TestLoad_InvalidYAML(t *testing.T) {
 	dir := t.TempDir()
 	cfgFile := filepath.Join(dir, "syncer.yaml")
-	content := []byte("settings:\n  storage_path: [unclosed bracket\n")
+	content := []byte("applications:\n  apps: [unclosed bracket\n")
 	if err := os.WriteFile(cfgFile, content, 0644); err != nil {
 		t.Fatal(err)
 	}

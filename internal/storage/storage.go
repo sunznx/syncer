@@ -51,6 +51,47 @@ func (s *customStorage) HomeDir() string {
 	return s.home
 }
 
+// StorageOption represents a detected storage location.
+type StorageOption struct {
+	Name string // Display name (e.g. "iCloud", "Dropbox")
+	Path string // Full path to the syncer directory
+}
+
+// DetectAvailable returns cloud storage directories that exist on this machine.
+// The fallback ~/.config/syncer is always included.
+func DetectAvailable(homeDir string) []StorageOption {
+	type candidate struct {
+		name string
+		path string
+	}
+
+	candidates := []candidate{
+		{"iCloud", filepath.Join(homeDir, "Library", "Mobile Documents", "com~apple~CloudDocs")},
+		{"Dropbox", filepath.Join(homeDir, "Dropbox")},
+		{"Google Drive", filepath.Join(homeDir, "Google Drive")},
+		{"OneDrive", filepath.Join(homeDir, "OneDrive")},
+		{"Box", filepath.Join(homeDir, "Box")},
+	}
+
+	var options []StorageOption
+	for _, c := range candidates {
+		if fi, err := os.Stat(c.path); err == nil && fi.IsDir() {
+			options = append(options, StorageOption{
+				Name: c.name,
+				Path: filepath.Join(c.path, "syncer"),
+			})
+		}
+	}
+
+	// Always include fallback
+	options = append(options, StorageOption{
+		Name: "Local (~/.config/syncer)",
+		Path: filepath.Join(homeDir, ".config", "syncer"),
+	})
+
+	return options
+}
+
 // NewDefault creates a storage by auto-detecting cloud storage.
 func NewDefault(homeDir string) (Storage, error) {
 	home := homeDir

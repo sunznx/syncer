@@ -21,11 +21,8 @@ type Config struct {
 	ConfigFile string `yaml:"-"`
 }
 
-// Settings contains configuration settings
-type Settings struct {
-	// StoragePath overrides auto-detected storage location.
-	StoragePath string `yaml:"storage_path"`
-}
+// Settings contains configuration settings.
+type Settings struct{}
 
 // Applications contains app sync configuration
 type Applications struct {

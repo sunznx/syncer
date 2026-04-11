@@ -4,6 +4,7 @@ import (
 	"embed"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -42,6 +43,7 @@ Use "syncer list" to see all supported applications.`,
 	rootCmd.AddCommand(restoreCmd())
 	rootCmd.AddCommand(listCmd())
 	rootCmd.AddCommand(doctorCmd())
+	rootCmd.AddCommand(initCmd())
 	rootCmd.AddCommand(versionCmd())
 
 	// Persistent flags
@@ -277,6 +279,69 @@ func modeLabel(app *appdb.AppConfig) string {
 	return "link"
 }
 
+func initCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "init",
+		Short: "Initialize syncer configuration",
+		Long:  "Interactively set up syncer by choosing a storage location.\nThis creates a syncer.yaml so that other commands can auto-detect the sync directory.",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			home, err := os.UserHomeDir()
+			if err != nil {
+				return fmt.Errorf("get home directory: %w", err)
+			}
+
+			// Check if syncer.yaml already exists
+			cfg, _ := config.Load(config.WithHomeDir(home))
+			if cfg.ConfigFile != "" {
+				fmt.Printf("syncer is already initialized.\nConfig file: %s\n", cfg.ConfigFile)
+				fmt.Println("\nEdit it to customize, or delete it to re-initialize.")
+				return nil
+			}
+
+			options := storage.DetectAvailable(home)
+			if len(options) == 0 {
+				return fmt.Errorf("no storage locations detected")
+			}
+
+			fmt.Println("Choose a storage location for syncer:")
+			fmt.Println()
+			for i, opt := range options {
+				fmt.Printf("  %d) %s\n", i+1, opt.Name)
+				fmt.Printf("     %s\n", opt.Path)
+			}
+			fmt.Println()
+
+			fmt.Print("Enter number: ")
+			var choice int
+			if _, err := fmt.Scanln(&choice); err != nil || choice < 1 || choice > len(options) {
+				return fmt.Errorf("invalid selection")
+			}
+
+			selected := options[choice-1]
+
+			// Create syncer directory
+			if err := os.MkdirAll(selected.Path, 0o755); err != nil {
+				return fmt.Errorf("create directory %s: %w", selected.Path, err)
+			}
+
+			// Write syncer.yaml
+			configPath := filepath.Join(selected.Path, "syncer.yaml")
+			content := []byte("# syncer configuration\n# Edit this file to customize which apps to sync.\n# By default, all supported applications are synced.\n#\n# applications:\n#   apps:\n#     - git\n#     - zsh\n#   ignore:\n#     - iterm2\n")
+			if err := os.WriteFile(configPath, content, 0o644); err != nil {
+				return fmt.Errorf("write %s: %w", configPath, err)
+			}
+
+			fmt.Println()
+			fmt.Printf("Created %s\n", configPath)
+			fmt.Println()
+			fmt.Println("You can now run:")
+			fmt.Println("  syncer backup    # backup your configs")
+			fmt.Println("  syncer doctor    # check what would be synced")
+			return nil
+		},
+	}
+}
+
 func versionCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "version",
@@ -505,12 +570,8 @@ func ensureFilesFromExternals(app *appdb.AppConfig) {
 }
 
 func resolveStorage(cfg *config.Config) (storage.Storage, error) {
-	// CLI flag takes highest priority
 	if flagSyncerDir != "" {
 		return storage.NewCustom(flagSyncerDir)
-	}
-	if cfg.Settings.StoragePath != "" {
-		return storage.NewCustom(cfg.Settings.StoragePath)
 	}
 	return storage.NewDefault(cfg.HomeDir)
 }

@@ -27,6 +27,9 @@ Mackup makes you choose between **copy** and **link** modes. In practice:
 ## Quick Start
 
 ```bash
+# Initialize syncer (first time only)
+syncer init
+
 # Backup everything
 syncer backup
 
@@ -42,6 +45,15 @@ syncer backup --dry-run
 
 ## Installation
 
+**Homebrew** (macOS / Linux):
+
+```bash
+brew tap sunznx/tap
+brew install syncer
+```
+
+**Go install**:
+
 ```bash
 go install github.com/sunznx/syncer@latest
 ```
@@ -51,6 +63,7 @@ Or grab a prebuilt binary from [Releases](../../releases).
 ## Commands
 
 ```
+syncer init                # Initialize syncer (choose storage location)
 syncer backup  [app...]    # Backup home configs to sync directory
 syncer restore [app...]    # Restore configs from sync directory
 syncer list                # List all supported applications
@@ -79,7 +92,9 @@ syncer doctor -v
 
 ## Storage Auto-Detection
 
-syncer finds your cloud storage automatically. It checks each directory in order and uses the **first one that contains a `syncer/syncer.yaml` file** as the sync root:
+Run `syncer init` to choose a storage location. It detects available cloud storage and creates the configuration for you.
+
+syncer checks each directory in order and uses the **first one that contains a `syncer/syncer.yaml` file** as the sync root:
 
 1. iCloud (`~/Library/Mobile Documents/com~apple~CloudDocs`)
 2. Dropbox
@@ -102,9 +117,6 @@ applications:
     - vscode
   ignore:
     - iterm2
-
-settings:
-  storage_path: ""  # empty = auto-detect
 ```
 
 Config discovery order:

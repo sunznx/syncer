@@ -110,16 +110,11 @@ func TestResolveStorage(t *testing.T) {
 	}
 	flagSyncerDir = ""
 
-	// Test with config setting
-	cfg.Settings.StoragePath = "/config/sync"
-	store, err = resolveStorage(cfg)
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
+	// Test auto-detect fails when no storage configured
+	_, err = resolveStorage(cfg)
+	if err == nil {
+		t.Error("expected error for auto-detect with no storage")
 	}
-	if s, _ := store.SyncDir(); s != "/config/sync" {
-		t.Errorf("expected /config/sync, got %q", s)
-	}
-	cfg.Settings.StoragePath = ""
 }
 
 func TestPreviewSync(t *testing.T) {
@@ -478,9 +473,10 @@ func TestRootCmd(t *testing.T) {
 	rootCmd.AddCommand(restoreCmd())
 	rootCmd.AddCommand(listCmd())
 	rootCmd.AddCommand(doctorCmd())
+	rootCmd.AddCommand(initCmd())
 	rootCmd.AddCommand(versionCmd())
 
-	if len(rootCmd.Commands()) != 5 {
-		t.Errorf("expected 5 subcommands, got %d", len(rootCmd.Commands()))
+	if len(rootCmd.Commands()) != 6 {
+		t.Errorf("expected 6 subcommands, got %d", len(rootCmd.Commands()))
 	}
 }
