@@ -1,5 +1,7 @@
 # Binaries
 build/
+syncer
+main
 
 # Test coverage
 coverage.out
