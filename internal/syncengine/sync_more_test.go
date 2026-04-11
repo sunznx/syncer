@@ -114,7 +114,9 @@ func TestSyncFileBackupResync(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(homeDir, "file.txt"), []byte("home"), 0644); err != nil {
 		t.Fatal(err)
 	}
-	os.WriteFile(filepath.Join(syncDir, "file.txt"), []byte("sync"), 0644)
+	if err := os.WriteFile(filepath.Join(syncDir, "file.txt"), []byte("sync"), 0644); err != nil {
+		t.Fatal(err)
+	}
 
 	app := &appdb.AppConfig{Name: "test", Files: []string{"file.txt"}, Mode: "copy"}
 	result, err := engine.Sync(app)
@@ -177,7 +179,9 @@ func TestMigrateExternalSyncPathNotSymlink(t *testing.T) {
 	engine := New("/home", syncDir)
 
 	path := filepath.Join(syncDir, "regular.txt")
-	os.WriteFile(path, []byte("x"), 0644)
+	if err := os.WriteFile(path, []byte("x"), 0644); err != nil {
+		t.Fatal(err)
+	}
 
 	migrated, err := engine.migrateExternalSyncPath(path)
 	if err != nil {
@@ -190,7 +194,9 @@ func TestMigrateExternalSyncPathNotSymlink(t *testing.T) {
 
 func TestPathAccessible(t *testing.T) {
 	f := filepath.Join(t.TempDir(), "accessible.txt")
-	os.WriteFile(f, []byte("x"), 0644)
+	if err := os.WriteFile(f, []byte("x"), 0644); err != nil {
+		t.Fatal(err)
+	}
 
 	if !pathAccessible(f) {
 		t.Error("expected true for accessible file")
@@ -206,7 +212,7 @@ func TestCreateSymlinkDryRunAlreadyCorrect(t *testing.T) {
 	engine := New(homeDir, syncDir, WithDryRun())
 
 	src := filepath.Join(syncDir, "src.txt")
-	os.WriteFile(src, []byte("x"), 0644)
+	_ = os.WriteFile(src, []byte("x"), 0644)
 
 	// In dry-run, if existing symlink is correct, should return ErrAlreadySynced
 	// But since we can't create it beforehand easily in dry-run test,
@@ -223,7 +229,7 @@ func TestCreateCopy(t *testing.T) {
 	engine := New(homeDir, syncDir)
 
 	src := filepath.Join(syncDir, "src.txt")
-	os.WriteFile(src, []byte("copy me"), 0644)
+	_ = os.WriteFile(src, []byte("copy me"), 0644)
 	dst := filepath.Join(homeDir, "dst.txt")
 
 	if err := engine.createCopy(src, dst); err != nil {
@@ -245,7 +251,7 @@ func TestCreateCopyDryRun(t *testing.T) {
 	engine := New(homeDir, syncDir, WithDryRun())
 
 	src := filepath.Join(syncDir, "src.txt")
-	os.WriteFile(src, []byte("x"), 0644)
+	_ = os.WriteFile(src, []byte("x"), 0644)
 	dst := filepath.Join(homeDir, "dst.txt")
 
 	if err := engine.createCopy(src, dst); err != nil {

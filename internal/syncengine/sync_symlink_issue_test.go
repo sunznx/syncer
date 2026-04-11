@@ -72,7 +72,7 @@ func TestIssue_SymlinkTargetNotAbsolute_Demo(t *testing.T) {
 	}
 
 	// Verify by actually creating the symlink
-	os.MkdirAll(filepath.Dir(homeSymlink), 0755)
+	_ = os.MkdirAll(filepath.Dir(homeSymlink), 0755)
 	os.RemoveAll(homeSymlink)
 
 	if err := os.Symlink(relSrc, homeSymlink); err != nil {
@@ -133,8 +133,8 @@ func TestFix_SymlinkWithAbsolutePath(t *testing.T) {
 	}
 
 	// Create the actual directory (in real scenario, this would be created by syncengine)
-	os.MkdirAll(absSyncDirSymlink, 0755)
-	os.MkdirAll(filepath.Dir(homeSymlink), 0755)
+	_ = os.MkdirAll(absSyncDirSymlink, 0755)
+	_ = os.MkdirAll(filepath.Dir(homeSymlink), 0755)
 
 	// Create home symlink with absolute path
 	if err := os.Symlink(absSyncDirSymlink, homeSymlink); err != nil {

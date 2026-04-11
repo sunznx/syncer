@@ -234,8 +234,12 @@ func TestListCmd(t *testing.T) {
 	// Setup a temporary sync directory with marker file
 	homeDir := t.TempDir()
 	syncDir := filepath.Join(homeDir, ".config", "syncer")
-	os.MkdirAll(syncDir, 0755)
-	os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n  apps:\n    - myapp\n"), 0644)
+	if err := os.MkdirAll(syncDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n  apps:\n    - myapp\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
 
 	// Override env to find config
 	oldEnv := os.Getenv("SYNCER_CONFIG")
@@ -255,13 +259,23 @@ func TestListCmd(t *testing.T) {
 func TestDoctorCmd(t *testing.T) {
 	homeDir := t.TempDir()
 	syncDir := filepath.Join(homeDir, ".config", "syncer")
-	os.MkdirAll(syncDir, 0755)
-	os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n  apps:\n    - myapp\n"), 0644)
+	if err := os.MkdirAll(syncDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n  apps:\n    - myapp\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
 
 	syncersDir := filepath.Join(syncDir, ".syncers")
-	os.MkdirAll(syncersDir, 0755)
-	os.WriteFile(filepath.Join(syncersDir, "myapp.yaml"), []byte("name: MyApp\nfiles:\n  - .myapp\n"), 0644)
-	os.WriteFile(filepath.Join(homeDir, ".myapp"), []byte("data"), 0644)
+	if err := os.MkdirAll(syncersDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(syncersDir, "myapp.yaml"), []byte("name: MyApp\nfiles:\n  - .myapp\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(homeDir, ".myapp"), []byte("data"), 0644); err != nil {
+		t.Fatal(err)
+	}
 
 	oldEnv := os.Getenv("SYNCER_CONFIG")
 	os.Setenv("SYNCER_CONFIG", filepath.Join(syncDir, "syncer.yaml"))
@@ -280,12 +294,12 @@ func TestDoctorCmd(t *testing.T) {
 func TestDoctorCmdWithArgs(t *testing.T) {
 	homeDir := t.TempDir()
 	syncDir := filepath.Join(homeDir, ".config", "syncer")
-	os.MkdirAll(syncDir, 0755)
-	os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n"), 0644)
+	_ = os.MkdirAll(syncDir, 0755)
+	_ = os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n"), 0644)
 
 	syncersDir := filepath.Join(syncDir, ".syncers")
-	os.MkdirAll(syncersDir, 0755)
-	os.WriteFile(filepath.Join(syncersDir, "myapp.yaml"), []byte("name: MyApp\nfiles:\n  - .myapp\n"), 0644)
+	_ = os.MkdirAll(syncersDir, 0755)
+	_ = os.WriteFile(filepath.Join(syncersDir, "myapp.yaml"), []byte("name: MyApp\nfiles:\n  - .myapp\n"), 0644)
 
 	oldEnv := os.Getenv("SYNCER_CONFIG")
 	os.Setenv("SYNCER_CONFIG", filepath.Join(syncDir, "syncer.yaml"))
@@ -305,8 +319,8 @@ func TestDoctorCmdWithArgs(t *testing.T) {
 func TestBackupRestoreCmd(t *testing.T) {
 	homeDir := t.TempDir()
 	syncDir := filepath.Join(homeDir, ".config", "syncer")
-	os.MkdirAll(syncDir, 0755)
-	os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n"), 0644)
+	_ = os.MkdirAll(syncDir, 0755)
+	_ = os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n"), 0644)
 
 	oldEnv := os.Getenv("SYNCER_CONFIG")
 	os.Setenv("SYNCER_CONFIG", filepath.Join(syncDir, "syncer.yaml"))
@@ -330,17 +344,17 @@ func TestBackupRestoreCmd(t *testing.T) {
 func TestRunSyncWithArgs(t *testing.T) {
 	homeDir := t.TempDir()
 	syncDir := filepath.Join(homeDir, ".config", "syncer")
-	os.MkdirAll(syncDir, 0755)
-	os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n  apps:\n    - myapp\n"), 0644)
+	_ = os.MkdirAll(syncDir, 0755)
+	_ = os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n  apps:\n    - myapp\n"), 0644)
 
 	// Create a custom app config with external resource
 	syncersDir := filepath.Join(syncDir, ".syncers")
-	os.MkdirAll(syncersDir, 0755)
+	_ = os.MkdirAll(syncersDir, 0755)
 	appYAML := "name: MyApp\nfiles:\n  - .myapp\nexternal:\n  - type: file\n    url: https://example.com/file.txt\n"
-	os.WriteFile(filepath.Join(syncersDir, "myapp.yaml"), []byte(appYAML), 0644)
+	_ = os.WriteFile(filepath.Join(syncersDir, "myapp.yaml"), []byte(appYAML), 0644)
 
 	// Create the home file
-	os.WriteFile(filepath.Join(homeDir, ".myapp"), []byte("data"), 0644)
+	_ = os.WriteFile(filepath.Join(homeDir, ".myapp"), []byte("data"), 0644)
 
 	oldEnv := os.Getenv("SYNCER_CONFIG")
 	os.Setenv("SYNCER_CONFIG", filepath.Join(syncDir, "syncer.yaml"))
@@ -358,13 +372,13 @@ func TestRunSyncWithArgs(t *testing.T) {
 func TestRunSyncDryRun(t *testing.T) {
 	homeDir := t.TempDir()
 	syncDir := filepath.Join(homeDir, ".config", "syncer")
-	os.MkdirAll(syncDir, 0755)
-	os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n  apps:\n    - myapp\n"), 0644)
+	_ = os.MkdirAll(syncDir, 0755)
+	_ = os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n  apps:\n    - myapp\n"), 0644)
 
 	syncersDir := filepath.Join(syncDir, ".syncers")
-	os.MkdirAll(syncersDir, 0755)
-	os.WriteFile(filepath.Join(syncersDir, "myapp.yaml"), []byte("name: MyApp\nfiles:\n  - .myapp\n"), 0644)
-	os.WriteFile(filepath.Join(homeDir, ".myapp"), []byte("data"), 0644)
+	_ = os.MkdirAll(syncersDir, 0755)
+	_ = os.WriteFile(filepath.Join(syncersDir, "myapp.yaml"), []byte("name: MyApp\nfiles:\n  - .myapp\n"), 0644)
+	_ = os.WriteFile(filepath.Join(homeDir, ".myapp"), []byte("data"), 0644)
 
 	oldEnv := os.Getenv("SYNCER_CONFIG")
 	os.Setenv("SYNCER_CONFIG", filepath.Join(syncDir, "syncer.yaml"))
@@ -386,8 +400,8 @@ func TestRunSyncDryRun(t *testing.T) {
 func TestRunSyncUnknownApp(t *testing.T) {
 	homeDir := t.TempDir()
 	syncDir := filepath.Join(homeDir, ".config", "syncer")
-	os.MkdirAll(syncDir, 0755)
-	os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n  apps:\n    - myapp\n"), 0644)
+	_ = os.MkdirAll(syncDir, 0755)
+	_ = os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n  apps:\n    - myapp\n"), 0644)
 
 	oldEnv := os.Getenv("SYNCER_CONFIG")
 	os.Setenv("SYNCER_CONFIG", filepath.Join(syncDir, "syncer.yaml"))
@@ -405,13 +419,13 @@ func TestRunSyncUnknownApp(t *testing.T) {
 func TestRunSyncAllApps(t *testing.T) {
 	homeDir := t.TempDir()
 	syncDir := filepath.Join(homeDir, ".config", "syncer")
-	os.MkdirAll(syncDir, 0755)
-	os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n  apps:\n    - myapp\n"), 0644)
+	_ = os.MkdirAll(syncDir, 0755)
+	_ = os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n  apps:\n    - myapp\n"), 0644)
 
 	syncersDir := filepath.Join(syncDir, ".syncers")
-	os.MkdirAll(syncersDir, 0755)
-	os.WriteFile(filepath.Join(syncersDir, "myapp.yaml"), []byte("name: MyApp\nfiles:\n  - .myapp\n"), 0644)
-	os.WriteFile(filepath.Join(homeDir, ".myapp"), []byte("data"), 0644)
+	_ = os.MkdirAll(syncersDir, 0755)
+	_ = os.WriteFile(filepath.Join(syncersDir, "myapp.yaml"), []byte("name: MyApp\nfiles:\n  - .myapp\n"), 0644)
+	_ = os.WriteFile(filepath.Join(homeDir, ".myapp"), []byte("data"), 0644)
 
 	oldEnv := os.Getenv("SYNCER_CONFIG")
 	os.Setenv("SYNCER_CONFIG", filepath.Join(syncDir, "syncer.yaml"))
@@ -429,13 +443,13 @@ func TestRunSyncAllApps(t *testing.T) {
 func TestRunBackupRestore(t *testing.T) {
 	homeDir := t.TempDir()
 	syncDir := filepath.Join(homeDir, ".config", "syncer")
-	os.MkdirAll(syncDir, 0755)
-	os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n  apps:\n    - myapp\n"), 0644)
+	_ = os.MkdirAll(syncDir, 0755)
+	_ = os.WriteFile(filepath.Join(syncDir, "syncer.yaml"), []byte("applications:\n  apps:\n    - myapp\n"), 0644)
 
 	syncersDir := filepath.Join(syncDir, ".syncers")
-	os.MkdirAll(syncersDir, 0755)
-	os.WriteFile(filepath.Join(syncersDir, "myapp.yaml"), []byte("name: MyApp\nfiles:\n  - .myapp\n"), 0644)
-	os.WriteFile(filepath.Join(homeDir, ".myapp"), []byte("data"), 0644)
+	_ = os.MkdirAll(syncersDir, 0755)
+	_ = os.WriteFile(filepath.Join(syncersDir, "myapp.yaml"), []byte("name: MyApp\nfiles:\n  - .myapp\n"), 0644)
+	_ = os.WriteFile(filepath.Join(homeDir, ".myapp"), []byte("data"), 0644)
 
 	oldEnv := os.Getenv("SYNCER_CONFIG")
 	os.Setenv("SYNCER_CONFIG", filepath.Join(syncDir, "syncer.yaml"))
