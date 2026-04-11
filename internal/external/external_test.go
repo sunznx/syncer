@@ -66,14 +66,14 @@ func TestHasUncommittedChanges(t *testing.T) {
 			// Create initial commit
 			initialFile := filepath.Join(repoDir, "initial.txt")
 			if err := os.WriteFile(initialFile, []byte("initial"), 0644); err != nil {
-					t.Fatalf("failed to write initial file: %v", err)
-				}
-				if err := exec.Command("git", "-C", repoDir, "add", ".").Run(); err != nil {
-					t.Fatalf("git add failed: %v", err)
-				}
-				if err := exec.Command("git", "-C", repoDir, "commit", "-m", "initial").Run(); err != nil {
-					t.Fatalf("git commit failed: %v", err)
-				}
+				t.Fatalf("failed to write initial file: %v", err)
+			}
+			if err := exec.Command("git", "-C", repoDir, "add", ".").Run(); err != nil {
+				t.Fatalf("git add failed: %v", err)
+			}
+			if err := exec.Command("git", "-C", repoDir, "commit", "-m", "initial").Run(); err != nil {
+				t.Fatalf("git commit failed: %v", err)
+			}
 
 			// Apply test-specific setup
 			if tt.setupFunc != nil {
@@ -540,7 +540,7 @@ func TestPullArchiveWithSubpaths(t *testing.T) {
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-			_, _ = w.Write(archiveData)
+		_, _ = w.Write(archiveData)
 	}))
 	defer ts.Close()
 
@@ -595,7 +595,7 @@ func TestPullArchiveWithExecutableSubpath(t *testing.T) {
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-			_, _ = w.Write(archiveData)
+		_, _ = w.Write(archiveData)
 	}))
 	defer ts.Close()
 
@@ -644,7 +644,7 @@ func TestPullArchiveTarBZ2(t *testing.T) {
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-			_, _ = w.Write(archiveData)
+		_, _ = w.Write(archiveData)
 	}))
 	defer ts.Close()
 
@@ -677,7 +677,7 @@ func TestPullArchiveZip(t *testing.T) {
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-			_, _ = w.Write(archiveData)
+		_, _ = w.Write(archiveData)
 	}))
 	defer ts.Close()
 
@@ -710,7 +710,7 @@ func TestPullArchiveSubpathMissing(t *testing.T) {
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-			_, _ = w.Write(archiveData)
+		_, _ = w.Write(archiveData)
 	}))
 	defer ts.Close()
 
