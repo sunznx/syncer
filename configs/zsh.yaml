@@ -6,5 +6,4 @@ files:
   - .zlogin
   - .zlogout
   - .zcompdump
-  - .zsh_history
   - .hushlogin
