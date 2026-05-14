@@ -1,3 +1,15 @@
-name: Codex
+name: codex
 files:
-  - .codex
+  - .codex/config.toml
+  - .codex/auth.json
+  - .codex/hooks
+  - .codex/hooks.json
+  - .codex/instructions.md
+  - .codex/.codex-global-state.json
+  - .codex/history.jsonl
+  - .codex/session_index.jsonl
+  - .codex/sessions
+  - .codex/archived_sessions
+  - .codex/memories
+  - .codex/prompts
+  - .codex/skills

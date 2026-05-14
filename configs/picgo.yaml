@@ -1,3 +1,4 @@
 name: PicGo
 files:
   - Library/Application Support/picgo/data.json
+  - .picgo/config.json
